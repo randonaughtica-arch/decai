@@ -1,0 +1,66 @@
+{
+	"geode": "4.4.0",
+	"gd": {
+		"win": "2.2074",
+		"android": "2.2074",
+		"mac": "2.2074",
+		"ios": "2.2074"
+	},
+	"id": "yourname.ai-deco",
+	"name": "AI Deco",
+	"version": "v1.0.0",
+	"developer": "YourName",
+	"description": "Select objects in the editor and prompt Claude to decorate them.",
+	"tags": ["editor", "utility"],
+	"dependencies": [
+		{
+			"id": "geode.node-ids",
+			"version": ">=v1.13.0",
+			"importance": "required"
+		}
+	],
+	"settings": {
+		"api-key": {
+			"type": "string",
+			"name": "Anthropic API Key",
+			"description": "Your Claude API key from console.anthropic.com. Stored in plain text in your Geode save folder, so don't share your save files.",
+			"default": ""
+		},
+		"model": {
+			"type": "string",
+			"name": "Model",
+			"description": "Opus gives the best layouts. Sonnet and Haiku are faster and cheaper.",
+			"default": "claude-opus-5-5",
+			"one-of": ["claude-opus-5-5", "claude-sonnet-5-5", "claude-haiku-5-5"]
+		},
+		"effort": {
+			"type": "string",
+			"name": "Effort",
+			"description": "How hard the model thinks. Lower is faster.",
+			"default": "medium",
+			"one-of": ["low", "medium", "high"]
+		},
+		"max-objects": {
+			"type": "int",
+			"name": "Max Generated Objects",
+			"description": "Upper limit on objects created per generation.",
+			"default": 150,
+			"min": 10,
+			"max": 1000
+		},
+		"max-context-objects": {
+			"type": "int",
+			"name": "Max Selection Objects Sent",
+			"description": "How many selected objects are described to the AI. Bigger selections are truncated.",
+			"default": 200,
+			"min": 10,
+			"max": 2000
+		},
+		"extra-palette": {
+			"type": "string",
+			"name": "Extra Object IDs",
+			"description": "Object IDs the AI may use besides those in your selection. Format: id:description, comma-separated. Example: 1764:small dot,211:black block",
+			"default": ""
+		}
+	}
+}
