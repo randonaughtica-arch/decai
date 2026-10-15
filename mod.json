@@ -1,24 +1,23 @@
 {
-	"geode": "4.4.0",
+	"geode": "5.11.1",
 	"gd": {
-		"win": "2.2074",
-		"android": "2.2074",
-		"mac": "2.2074",
-		"ios": "2.2074"
+		"win": "2.2081",
+		"android": "2.2081",
+		"mac": "2.2081",
+		"ios": "2.2081"
 	},
 	"id": "yourname.ai-deco",
 	"name": "AI Deco",
 	"version": "v1.0.0",
 	"developer": "YourName",
 	"description": "Select objects in the editor and prompt Claude to decorate them.",
-	"tags": ["editor", "utility"],
-	"dependencies": [
-		{
-			"id": "geode.node-ids",
-			"version": ">=v1.13.0",
-			"importance": "required"
-		}
+	"tags": [
+		"editor",
+		"utility"
 	],
+	"dependencies": {
+		"geode.node-ids": ">=v1.20.0"
+	},
 	"settings": {
 		"api-key": {
 			"type": "string",
@@ -31,14 +30,22 @@
 			"name": "Model",
 			"description": "Opus gives the best layouts. Sonnet and Haiku are faster and cheaper.",
 			"default": "claude-opus-5-5",
-			"one-of": ["claude-opus-5-5", "claude-sonnet-5-5", "claude-haiku-5-5"]
+			"one-of": [
+				"claude-opus-5-5",
+				"claude-sonnet-5-5",
+				"claude-haiku-5-5"
+			]
 		},
 		"effort": {
 			"type": "string",
 			"name": "Effort",
 			"description": "How hard the model thinks. Lower is faster.",
 			"default": "medium",
-			"one-of": ["low", "medium", "high"]
+			"one-of": [
+				"low",
+				"medium",
+				"high"
+			]
 		},
 		"max-objects": {
 			"type": "int",

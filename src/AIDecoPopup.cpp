@@ -4,7 +4,7 @@ using namespace geode::prelude;
 
 AIDecoPopup* AIDecoPopup::create(EditorUI* editorUI) {
     auto ret = new AIDecoPopup();
-    if (ret->initAnchored(360.f, 200.f, editorUI)) {
+    if (ret->init(editorUI)) {
         ret->autorelease();
         return ret;
     }
@@ -12,7 +12,9 @@ AIDecoPopup* AIDecoPopup::create(EditorUI* editorUI) {
     return nullptr;
 }
 
-bool AIDecoPopup::setup(EditorUI* editorUI) {
+bool AIDecoPopup::init(EditorUI* editorUI) {
+    if (!Popup::init(360.f, 200.f)) return false;
+
     m_editorUI = editorUI;
     m_context = deco::describeSelection(
         editorUI->getSelectedObjects(),
@@ -108,28 +110,22 @@ void AIDecoPopup::onGenerate(CCObject*) {
     this->setBusy(true);
     this->setStatus("Generating... (this can take a minute)", { 255, 255, 255 });
 
-    m_listener.bind([this](web::WebTask::Event* e) { this->onResponse(e); });
-    m_listener.setFilter(req.post("https://api.anthropic.com/v1/messages"));
+    m_request.spawn(
+        req.post("https://api.anthropic.com/v1/messages"),
+        [this](web::WebResponse res) { this->onResponse(std::move(res)); }
+    );
 }
 
-void AIDecoPopup::onResponse(web::WebTask::Event* event) {
-    if (event->isCancelled()) {
-        this->setBusy(false);
-        this->setStatus("Request cancelled.", { 255, 120, 120 });
-        return;
-    }
-    auto res = event->getValue();
-    if (!res) return; // still in progress
-
+void AIDecoPopup::onResponse(web::WebResponse res) {
     this->setBusy(false);
-    auto json = res->json().unwrapOr(matjson::Value());
+    auto json = res.json().unwrapOr(matjson::Value());
 
-    if (!res->ok()) {
-        std::string message = fmt::format("HTTP {}", res->code());
+    if (!res.ok()) {
+        std::string message = fmt::format("HTTP {}", res.code());
         if (json.contains("error") && json["error"].contains("message")) {
             message = json["error"]["message"].asString().unwrapOr(message);
         }
-        log::error("Claude API error: {}", res->string().unwrapOr(""));
+        log::error("Claude API error: {}", res.string().unwrapOr(""));
         this->setStatus("Error: " + message, { 255, 120, 120 });
         return;
     }
@@ -158,7 +154,7 @@ void AIDecoPopup::onResponse(web::WebTask::Event* event) {
 void AIDecoPopup::applyReply(std::string const& text) {
     auto layer = m_editorUI->m_editorLayer;
     auto built = deco::buildObjectString(
-        text, m_context, std::max(layer->m_currentLayer, 0),
+        text, m_context, std::max<int>(layer->m_currentLayer, 0),
         Mod::get()->getSettingValue<int64_t>("max-objects")
     );
     if (built.isErr()) {

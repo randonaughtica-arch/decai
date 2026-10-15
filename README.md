@@ -2,7 +2,7 @@
 
 Select objects in the Geometry Dash editor, click the cyan **star** button in the right-hand edit column, type what you want ("neon outline with small dots on top", "hanging chains under this platform"), and Claude adds the decoration.
 
-Targets **Geode v4 / GD 2.2074**.
+Targets **Geode v5 / GD 2.2081**.
 
 ## How it works
 
