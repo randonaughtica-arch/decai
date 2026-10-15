@@ -1,14 +1,14 @@
 # AI Deco (Geode mod)
 
-Select objects in the Geometry Dash editor, click the cyan **star** button in the right-hand edit column, type what you want ("neon outline with small dots on top", "hanging chains under this platform"), and Claude adds the decoration.
+Select objects in the Geometry Dash editor, click the cyan **star** button in the right-hand edit column, type what you want ("neon outline with small dots on top", "hanging chains under this platform"), and an AI adds the decoration.
 
 Targets **Geode v5 / GD 2.2081**.
 
 ## How it works
 
 1. The selection is turned into a compact description: each object's ID, position (relative to the selection's bottom-left corner), rotation, scale, colors and Z layer.
-2. That description plus your prompt goes to the Claude Messages API (`claude-opus-5-5` by default; change it in the mod settings).
-3. Claude replies with JSON: a list of objects to add.
+2. That description plus your prompt goes to the AI service picked in the mod settings.
+3. The AI replies with JSON: a list of objects to add.
 4. The mod checks every object (allowed ID, position near the selection, scale within a sane range), builds a GD object string, creates the objects, adds **one undo step**, and selects the new objects.
 
 **Object palette:** the AI may only place object IDs that are already in your selection, plus anything you list under *Extra Object IDs* in the settings (`id:description, id:description`). Any other ID is thrown away, so the AI can't invent objects that don't exist. To get good deco, select the area **and** a few deco pieces in the style you want.

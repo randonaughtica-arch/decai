@@ -10,7 +10,7 @@
 	"name": "AI Deco",
 	"version": "v1.0.0",
 	"developer": "YourName",
-	"description": "Select objects in the editor and prompt Claude to decorate them.",
+	"description": "Select objects in the editor and prompt an AI to decorate them.",
 	"tags": [
 		"editor",
 		"utility"
@@ -19,15 +19,46 @@
 		"geode.node-ids": ">=v1.20.0"
 	},
 	"settings": {
+		"provider": {
+			"type": "string",
+			"name": "AI Service",
+			"description": "Gemini, Groq and OpenRouter have free tiers (sign up for a free key, no payment). Ollama runs a model on your own PC for free, but is slow without a good GPU. Claude needs a paid Anthropic key.",
+			"default": "Gemini",
+			"one-of": [
+				"Gemini",
+				"Groq",
+				"OpenRouter",
+				"Ollama",
+				"Claude"
+			]
+		},
+		"free-api-key": {
+			"type": "string",
+			"name": "API Key (Gemini / Groq / OpenRouter)",
+			"description": "Free key for the selected service. Gemini: aistudio.google.com/apikey, Groq: console.groq.com, OpenRouter: openrouter.ai/keys. Stored in plain text in your Geode save folder.",
+			"default": ""
+		},
+		"free-model": {
+			"type": "string",
+			"name": "Model Override",
+			"description": "Leave empty for the default model of the selected service (Gemini: gemini-2.5-flash, Groq: openai/gpt-oss-120b, OpenRouter: openrouter/free, Ollama: qwen2.5:7b).",
+			"default": ""
+		},
+		"ollama-url": {
+			"type": "string",
+			"name": "Ollama URL",
+			"description": "Where Ollama is running. On Android, use your PC's local IP instead of localhost.",
+			"default": "http://localhost:11434"
+		},
 		"api-key": {
 			"type": "string",
-			"name": "Anthropic API Key",
-			"description": "Your Claude API key from console.anthropic.com. Stored in plain text in your Geode save folder, so don't share your save files.",
+			"name": "Claude API Key",
+			"description": "Only used when AI Service is Claude. Paid key from console.anthropic.com. Stored in plain text in your Geode save folder.",
 			"default": ""
 		},
 		"model": {
 			"type": "string",
-			"name": "Model",
+			"name": "Claude Model",
 			"description": "Opus gives the best layouts. Sonnet and Haiku are faster and cheaper.",
 			"default": "claude-opus-5-5",
 			"one-of": [
@@ -38,7 +69,7 @@
 		},
 		"effort": {
 			"type": "string",
-			"name": "Effort",
+			"name": "Claude Effort",
 			"description": "How hard the model thinks. Lower is faster.",
 			"default": "medium",
 			"one-of": [

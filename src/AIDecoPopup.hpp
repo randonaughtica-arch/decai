@@ -14,6 +14,7 @@ protected:
     geode::TextInput* m_input = nullptr;
     cocos2d::CCLabelBMFont* m_status = nullptr;
     CCMenuItemSpriteExtra* m_generateBtn = nullptr;
+    bool m_usingClaude = false;
     // Cancels the request automatically if the popup is closed first.
     geode::async::TaskHolder<geode::utils::web::WebResponse> m_request;
 
