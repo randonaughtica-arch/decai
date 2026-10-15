@@ -15,8 +15,17 @@ Targets **Geode v5 / GD 2.2081**.
 
 ## Setup
 
-1. Get an API key at https://console.anthropic.com.
-2. In-game: Geode → AI Deco → Settings → paste the key.
+Pick an **AI Service** in Geode → AI Deco → Settings:
+
+| Service | Cost | Key |
+|---|---|---|
+| **Gemini** (default) | Free tier, rate limited | https://aistudio.google.com/apikey |
+| **Groq** | Free tier, rate limited | https://console.groq.com |
+| **OpenRouter** | Free models, low daily limit | https://openrouter.ai/keys |
+| **Ollama** | Free, runs on your PC (slow without a modern GPU) | none: install from https://ollama.com, then run `ollama pull qwen2.5:7b` |
+| **Claude** | Paid | https://console.anthropic.com |
+
+Paste the key into **API Key** (or **Claude API Key** for Claude). Free-tier limits change often; if you see "Rate limited", wait a minute and try again.
 
 ## Building
 
